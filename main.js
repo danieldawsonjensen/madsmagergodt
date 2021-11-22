@@ -3,8 +3,12 @@ const { Client } = require("pg")
 
 const app = express()
 const api_port = 3000
+<<<<<<< HEAD
 // mads du er talentløs :)
 // I det mindste er jeg ikke kæreste med en mand
+=======
+// mads du er talentløs :)adølad
+>>>>>>> 1fa03163fc65bb5e690aade17e61fc0986655882
 const klient = new Client({
     user: "vvkctgka",
     host: "abul.db.elephantsql.com",
