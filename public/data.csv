@@ -1,0 +1,57 @@
+"mad_id","navn","kategori_id","co2_kg"
+1,"Pepper, sweet, red, raw",10,1.02
+7,"Cucumber, raw",10,0.56
+11,"Beef, fillet, defatted, raw",12,151.95
+12,"Beef, mince, 10-15% fat, raw",12,32.51
+15,"Beef, T-bone steak, raw",12,80.89
+24,"Granola bar",1,2.88
+28,"Wheat bread, for toasting, industrially produced",1,0.74
+31,"Rye bread, dark, whole grains, industrially produced",1,0.62
+37,"Butter, salt added",13,3.92
+39,"Plain cake, chocolate cake",1,2.15
+44,"Bacon, frying, raw",12,4.8
+48,"Pork, sausage, Danish, raw",12,2.21
+56,"Chicken, sausage",12,1.44
+71,"Mackerel mayonnaise salad",8,4.18
+77,"Skyr, 0.2 % fat",13,1.25
+78,"Cheese, firm, Danbo, 45 % fidm.",13,7.72
+98,"Tuna, in water, canned",3,5.6
+108,"Eggs, chicken, free-range hens (indoor), raw",13,0.85
+115,"Trout, raw",3,2.72
+136,"Garlic, raw",10,1.33
+151,"Salt, table",8,0.44
+155,"Broccoli, raw",10,0.71
+161,"Spinach, raw",10,0.52
+164,"Lettuce, iceberg (incl. crisphead types), raw",10,0.59
+189,"Salmon, Atlantic, wild, raw",3,9.46
+190,"Mackerel, raw",3,9.12
+192,"Herring, raw",3,9.34
+194,"Cod, fillet, raw",3,9.87
+203,"Remoulade, average values",8,1.88
+207,"Mushroom, raw",10,0.47
+211,"Oatmilk, with added calcium",13,0.37
+212,"Soymilk, with added calcium",13,0.38
+220,"Bouillon, beef, concentrated, cube",8,7.26
+228,"Pizza with meat, tomato and cheese, ready meals",1,3.91
+242,"Pork, mince, 5-10% fat, raw",12,2.9
+256,"Potato, raw",10,0.36
+257,"Carrot, raw",10,0.25
+266,"Onion, raw",10,0.9
+302,"Pepper, black",8,4.3
+317,"Avocado, raw",4,1.07
+327,"Banana, raw",4,0.98
+328,"Lemon, raw",4,0.94
+329,"Watermelon, raw",4,0.78
+330,"Orange, raw",4,0.81
+333,"Pineapple, raw",4,0.65
+343,"Milk, skimmed, 0.5 % fat",13,0.48
+344,"Milk, skimmed, with chocolate (UHT)",13,0.65
+346,"Veal, medium fat, raw",12,50.36
+369,"Tomato ketchup, bottled",8,2.01
+386,"Minced chicken",12,3.76
+423,"Chicken, whole",12,2.22
+473,"Vegan mayo",8,3.07
+476,"Vegan block",13,0.97
+493,"Burger buns",1,0.74
+496,"Vegan cheese, grated or sliced",13,1
+234,"Pasta, raw",1,1.73

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <script type="text/javascript" src="./DAI-projekter/semester1/charts.js"></script>
+  <script type="text/javascript" src="./DAI-projekter/semester1/d3.js"></script>
+  <title>CO2 udslip i Danmark</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="icon" type="image/png" href="./DAI-projekter/projekt-1-sem/billeder/icon.png" />
+</head>
+
+<body>
+  <h1 class="overskrift">CO2 udslip i Danmark før og efter covid-19</h1>
+
+  <div class="header">
+    <div class="knapper">
+      <button onclick="location.href = './DAI-projekter/projekt-1-sem/visualiseringer/lastbil.html';"
+        class="top-buttons">Lastbil</button>
+      <button onclick="location.href = './DAI-projekter/projekt-1-sem/visualiseringer/fly.html';"
+        class="top-buttons">Fly</button>
+      <button onclick="location.href = './DAI-projekter/projekt-1-sem/visualiseringer/tog.html';"
+        class="top-buttons">Tog</button>
+      <button onclick="location.href = './DAI-projekter/projekt-1-sem/visualiseringer/biler.html';"
+        class="top-buttons">Bil</button>
+
+      <div class="dropdown">
+        <button class="dropbtn">Sammenligning</button>
+        <div class="dropdown-content">
+          <a href="https://sjette-semester-map.herokuapp.com/">Map</a>
+          <a href="./DAI-projekter/aroundtheworld/aroundtheworld.html">Around the world</a>
+        </div>
+      </div>
+
+      <div class="linetop">
+      </div>
+
+    </div>
+
+  </div>
+
+  <section class="p-menu1">
+    <nav id="navbar" class="navigation" role="navigation">
+      <input id="toggle1" type="checkbox" />
+      <label class="hamburger1" for="toggle1">
+        <div class="top"></div>
+        <div class="meat"></div>
+        <div class="bottom"></div>
+      </label>
+
+      <nav class="menu1">
+        <a class="link1"
+          href="./DAI-projekter/projekt-1-sem/skolefag/Projektstyring/Projektstyring.html">Projektstyring</a>
+        <a class="link1"
+          href="./DAI-projekter/projekt-1-sem/skolefag/Dataforstaaelse/Dataforstaaelse.html">Dataforståelse</a>
+        <a class="link1"
+          href="./DAI-projekter/projekt-1-sem/skolefag/Visualisering/Visualisering.html">Visualisering</a>
+        <a class="link1" href="./DAI-projekter/projekt-1-sem/skolefag/Webteknologi/Webteknologi.html">Webteknologi</a>
+      </nav>
+    </nav>
+  </section>
+
+  </div>
+
+  <div class="compare-buttons">
+    <button onclick="addLine('Lastbil', 'red');" class="compareKnap">Lastbil</button>
+    <button onclick="addLine('Fly', 'blue');" class="compareKnap">Fly</button>
+    <button onclick="addLine('Tog', 'green');" class="compareKnap">Tog</button>
+    <button onclick="addLine('Dieselbil', 'pink');" class="compareKnap">Dieselbil</button>
+    <button onclick="addLine('Benzinbil', 'purple');" class="compareKnap">Benzinbil</button>
+    <br>
+    <button onclick="removePath('Lastbil');" class="compareKnap">Fjern lastbil</button>
+    <button onclick="removePath('Fly');" class="compareKnap">Fjern fly</button>
+    <button onclick="removePath('Tog');" class="compareKnap">Fjern tog</button>
+    <button onclick="removePath('Dieselbil');" class="compareKnap">Fjern dieselbil</button>
+    <button onclick="removePath('Benzinbil');" class="compareKnap">Fjern benzinbil</button>
+    <br>
+
+  </div>
+  <div class="back-box">
+    <div class="click-to-tooltip">
+      <img class="question" src="./DAI-projekter/projekt-1-sem/billeder/questionmark.png" alt="image" />
+      <span>Dataen til de forskellig charts er taget fra de individuelle charts(kan findes øverst på siden). Her er de blevet langt ind i visualisering så man kan vurdere dem i forhold til hinanden.</span>
+    </div>
+  </div>
+
+  <g class="Farver">
+    <div class="Lastbil1">
+      <div class="Lastbil-farve" style="background-color: red;"></div>
+      <p>Lastbil</p>
+    </div>
+    <div class="Fly1">
+      <div class="Fly-farve" style="background-color: blue;"></div>
+      <p>Fly</p>
+    </div>
+    <div class="Tog1">
+      <div class="Tog-farve" style="background-color: green;"></div>
+      <p>Tog</p>
+    </div>
+    <div class="Diesel1">
+      <div class="Diesel-farve" style="background-color: pink;"></div>
+      <p>Dieselbil</p>
+    </div>
+    <div class="Benzin1">
+      <div class="Benzin-farve" style="background-color: purple;"></div>
+      <p>Benzinbil</p>
+    </div>
+  </g>
+  <script>
+    // Foruddefinerer variabler som globale 
+    let yScale = 0;
+    let data = [];
+    let xScale;
+    let Lastbil;
+    let svg;
+    let paths;
+
+    d3.json("/postgresql/query", {
+      method: "POST",
+      body: `SELECT T.type, A.aarstal, CAST((C.antal_km * T.co2_km)/100000 AS bigint) AS co2udslip
+                  FROM public."Co2" AS C
+                  INNER JOIN public."Transportmidler" AS T ON C.transportmiddel_id = T.transportmiddel_id
+                  INNER JOIN public."Tid" AS A ON C.tid_id = A.tid_id 
+                  ORDER BY T.transportmiddel_id ASC, A.tid_id;`
+    }).then(function (response) {
+      const gammelData = response.data;
+      console.log("data", gammelData);
+
+      // Definere start og slut år på visualisering
+      let startAar = 2015;
+      let slutAar = 2020;
+
+      // Danner nyt array af objekter så datasæt brugbart til d3.js med multi-line chart
+      for (let aar = startAar; aar <= slutAar; aar++) {
+        data.push({ "aarstal": aar })
+        for (let i in gammelData) {
+          if (gammelData[i].aarstal == aar) {
+            data[aar - startAar][gammelData[i].type] = gammelData[i].co2udslip
+          };
+        };
+      };
+
+      // Definerer margin, højde og bredde på SVG
+      var margin = { "top": 20, "right": 20, "bottom": 30, "left": 75 },
+        w = 750,
+        h = 300;
+
+      // Danner xScale
+      xScale = d3.scaleTime()
+        .range([0, w - margin.right * 2])
+        .domain(d3.extent(data, function (d) { return new Date(parseInt(d.aarstal), 0); }));
+
+      // Danner yScale
+      yScale = d3.scaleLinear()
+        .range([h, 0 + margin.top])
+        .domain([0, d3.max(data, function (d) { return Math.max(d.Lastbil) / 0.8; })]);
+
+      // Opretter lastbil-linje
+      Lastbil = d3.line()
+        .x(function (d) { return xScale(new Date(parseInt(d.aarstal), 0)); })
+        .y(function (d) { return yScale(d.Lastbil); });
+
+      // Tilføjer svg til body
+      // Tilføjer 'g'/'gruppe' element til svg
+      // Flytter 'g' til top venstre margin
+      svg = d3.select("body")
+        .append("svg")
+        .attr("class", "chart")
+        .attr("width", w + margin.left + margin.right)
+        .attr("height", h + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left * 1.5 + "," + margin.top + ")");
+
+      // Indsætte første path (lastbiler)
+      svg.append("path")
+        .datum(data)
+        .transition().duration(1000)
+        .attr("id", "Lastbil")
+        .attr("class", "line")
+        .style("stroke", "red")
+        .attr("d", Lastbil);
+
+      // Indsætter lastbil til "eksisterende path array" som objekt
+      paths = [{ "type": "Lastbil", "liste": Lastbil }];
+
+      // Indsætter X aksen
+      svg.append("g")
+        .attr("transform", "translate(0," + h + ")")
+        .call(d3.axisBottom(xScale)
+          .tickFormat(d3.timeFormat("%Y"))
+          .ticks(data.length));
+
+      // Indsætter Y aksen
+      svg.append("g")
+        .attr("id", "y-akse")
+        .call(d3.axisLeft(yScale).ticks(6));
+
+      // Tilføjer titel til Y akse
+      svg.append("text")
+        .attr("class", "y-title")
+        .attr("x", -margin.left - 20)
+        .attr("y", -margin.left)
+        .attr("transform", `rotate(-90)`)
+        .style("font-size", "12px")
+        .text("CO2 I TON");
+
+      // Tilføjer titel til X akse
+      svg.append("text")
+        .attr("class", "x-title")
+        .attr("x", 0)
+        .attr("y", h + margin.bottom)
+        .style("font-size", "12px")
+        .text("ÅRSTAL");
+
+      var xScale2019 = new Date(parseInt(2019), 0)
+      // Tilføjer corona Linje - er ved ultimo 2019
+      svg.append('line')
+        .attr("class", "danger-line")
+        .attr("x1", 568)
+        .attr("y1", 22)
+        .attr("x2", 568)
+        .attr("y2", 300)
+        .style("stroke-dasharray", ("5, 5"))
+
+      // Tilføjer titel til covid-linje
+      svg.append("text")
+        .attr("class", "corona-title")
+        .attr("x", (xScale(xScale2019)))
+        .attr("y", (margin.top))
+        .attr("text-anchor", "middle")
+        .style("font-size", "12px")
+        .text("COVID-19")
+        .attr("fill", "red")
+        .attr("font-weight", "Bold");
+    })
+
+    function addLine(vehicle, color) {
+      // Opdater yScale
+      yScale.domain([0, d3.max(data, function (d) { return Math.max(d[vehicle]) / 0.8; })]);
+
+      // Definerer ny path til indsættelse
+      var valueline = d3.line()
+        .x(function (d) { return xScale(new Date(parseInt(d.aarstal), 0)); })
+        .y(function (d) { return yScale(d[vehicle]); });
+
+      // Opdaterer Y aksen med scaling
+      svg.select("#y-akse")
+        .transition()
+        .duration(1500)
+        .call(d3.axisLeft(yScale).ticks(6));
+
+      // Opdaterer scaling på alle eksisterende paths
+      for (let path of paths) {
+        svg.select(`path#${path.type}`)
+          .transition()
+          .duration(1500)
+          .attr("d", path.liste);
+      };
+
+      // Hvis path ikke findes, så indsættes nye path
+      // Hvis path allerede findes, så gør ingenting
+      // index = -1 hvis path ikke allerede findes; index-nummer i array hvis path findes
+      // if (index === -1) => true - hvis index = -1 / false - hvis index >= 0
+      var index = paths.findIndex(x => x.type == vehicle);
+      if (index === -1) {
+        svg.append("path")
+          .datum(data)
+          .attr("opacity", 0)
+          .transition().delay(1500).duration(1000)
+          .attr("class", "line")
+          .attr("id", vehicle)
+          .style("stroke", color)
+          .attr("d", valueline)
+          .duration(500)
+          .attr("opacity", 1)
+      }
+
+      // Hvis path ikke allerede eksisterer, så push path data ind til array
+      // Hvis path allerede findes, så pushes ikke til array
+      if (index === -1) {
+        paths.push({ "type": vehicle, "liste": valueline });
+      }
+    };
+
+    function removePath(id) {
+      // Function anvendes til at fjerne eksisterende path ved button click
+      // Fjerner element fra DOM og objekt fra array: paths
+      document.getElementById(id).remove();
+      index = paths.findIndex(x => x.type === id);
+      paths.splice(index, 1);
+    };
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">    
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Co2 aftryk gennem maden</title>
+	<script type="text/javascript" src="d3.js"></script>
+    <style>
+
+    </style>
+</head>
+<div class="boxed">
+    <h1>Co2 aftryk gennem Ahmads røvhul</h1>
+</div>
+
+<body>
+    <script>
+        let kategori = ["brød", "fisk", "frugt", "krydderier", "grøntsager", "kød", "mejeri"];
+        let brød_varer = ["rugbrød", "burgerboller", "toastbrød", "granolabar", "chokoladekage", "pizza", "pasta"];
+        let fisk_varer = ["tun i vand", "ørred", "laks", "makrel", "sild", "torsk"];
+        let frugt_varer = ["avokado", "banan", "citron", "vandmelon", "appelsin", "ananas"];
+        let krydderi_varer = ["makrelsalat", "salt", "remoulade", "okseboullion", "sort peber", "tomatketchup", "vegansk mayo"];
+        let grøntsags_varer = ["rød peber", "agurk", "hvidløg", "broccoli", "spinat", "iceberg salat", "svampe", "kartofler", "gullerødder", "løg"];
+        let kød_varer = ["oksefillet", "hakket oksekød", "t-bone steak", "bacon", "svinepølse", "kyllingepølse", "hakket svinekød", "kalvekød", "hakket kyllingekød", "hel kylling"];
+        let mejeri_varer = ["smør", "skyr", "ost", "æg", "havremælk", "soyamælk", "skummetmælk", "kakao, skummetmælk", "vegansk smør", "vegansk ost"];</script>
+
+    <label for="lang">Kategori</label>
+    <br>
+    <select id="selectNumber">
+        <option>Vælg kategori</option>
+    </select>
+    <section class="p-menu1">
+        <nav id="navbar" class="navigation" role="navigation">
+          <input id="toggle1" type="checkbox">
+          <label class="hamburger1" for="toggle1">
+            <div class="top"></div>
+            <div class="meat"></div>
+            <div class="bottom"></div>
+          </label>
+    
+          <nav class="menu1">
+            <a class="link1" href="">Projektstyring</a>
+            <a class="link1" href="">Dataforståelse</a>
+            <a class="link1" href="">Visualisering</a>
+            <a class="link1" href="">Webteknologi</a>
+          </nav>
+        </nav>
+      </section>
+
+    </select>
+    <br>
+    <label for="lang">Ingrediens</label>
+    <br>
+    <select id="selectNumber">
+        <option>Vælg ingrediens</option>
+    </select>
+
+    <h4> Sammenligning af din valgte ret med fire populære retter: </h4>
+    <p>&#129385;</p>
+
+    <script>
+        let select = document.getElementById("selectNumber");
+        for (var i = 0; i < kategori.length; i++) {
+            var kat = kategori[i];
+            var el = document.createElement("option");
+            el.textContent = kat;
+            el.value = kat;
+            select.appendChild(el);
+        }
+
+        for (var i = 0; i < brød_varer.length; i++) {
+            var ing = brød_varer[i];
+            var el = document.createElement("option");
+            el.textContent = ing;
+            el.value = ing;
+            select.appendChild(el);
+        }
+
+
+
+        //Width and height
+        var w = 500;
+        var h = 300;
+        var barPadding = 2;
+        
+        var dataset = [["Pasta kødsovs", 17.6192], ["Vegetarret", 2.6922], ["Hel kylling", 2.58], ["Lasange", 21.1552]];
+
+      
+        //Create SVG element
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+        svg.selectAll("rect")
+            .data(dataset)
+            .enter()
+            .append("rect")
+            .attr("x", function (d, i) {
+                return i * (w / dataset.length);
+            })
+            .attr("y", function (d) {
+                return h - (d * 4);
+            })
+            .attr("width", w / dataset.length - barPadding)
+            .attr("height", function (d) {
+                return d * 4;
+            })
+            .attr("fill", function(d) {
+      if (d < 15){
+      return "green";
+  } else 
+  return "red";
+  });
+        svg.selectAll("text")
+            .data(dataset)
+            .enter()
+            .append("text")
+            .text(function (d) {
+                return d;
+            })
+            .attr("text-anchor","middle")
+            .attr("x", function (d, i) {
+                return i * (w / dataset.length) + (w / dataset.length-barPadding) / 2;
+            })
+            .attr("y", function (d, i) {
+                return h - (d * 3.5) - 20;
+            })
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "11px")
+            .attr("fill", "black")
+
+            let xAxis = d3.axisBottom()
+            .scale(xScale)
+
+            let yAxis = d3.axisLeft()
+            .scale(yScale)
+            .ticks(10);
+            
+            svg.append("g")
+                .attr("class","axis")
+                .attr("transform", "translate(0," + (h - barPadding)+")")
+                .call(xAxis);
+
+            svg.append("g")
+                .attr("class","axis")
+                .attr("transform", "translate(" + barPadding + ",0")
+                .call(yAxis);
+
+
+
+
+
+    </script>
+<table>
+    <tr>
+      <th>Ingrediens</td>
+      <th>Mængde</td>
+      <th>Udledt Co2</td>
+      <th>Co2 udledt i alt</td>
+    </tr>
+    <tr>
+      <td>Oksekød</td>
+      <td>500g</td>
+      <td>25kg</td>
+	  <td rowspan="6">150kg</td>
+    </tr>
+    <tr>
+        <td>Oksekød</td>
+        <td>500g</td>
+        <td>25kg</td>
+      </tr>
+      <tr>
+        <td>Oksekød</td>
+        <td>500g</td>
+        <td>25kg</td>
+      </tr>
+      <tr>
+        <td>Oksekød</td>
+        <td>500g</td>
+        <td>25kg</td>
+      </tr>
+      <tr>
+        <td>Oksekød</td>
+        <td>500g</td>
+        <td>25kg</td>
+      </tr>
+      <tr>
+        <td>Oksekød</td>
+        <td>500g</td>
+        <td>25kg</td>
+      </tr>
+  </table>
+</body>
+
+
+
+</html>
