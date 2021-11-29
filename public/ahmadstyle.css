@@ -73,26 +73,26 @@ a {
   position: absolute;
   align-content: center;
   margin-top: 3px;
-  margin-left: 20px;
+  margin-left: 12px;
 }
 /* Hamburger */
 .hamburger1 {
-  height: 40px;
+  height: 30px;
   margin: 15px;
   display: -ms-grid;
   display: grid;
-  grid-template-rows: repeat(2, 9px);
+  grid-template-rows: repeat(3, 9px);
   justify-items: center;
-  z-index: 115;
+  z-index: 120;
 }
 .hamburger1 div {
   background-color: black;
   position: relative;
   width: 35px;
-  height: 3px;
-  margin-top: 7px;
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
+  height: 4px;
+  margin-top: 10px;
+  -webkit-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
   color: black;
 }
 #toggle1 {
