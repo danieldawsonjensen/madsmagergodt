@@ -77,13 +77,13 @@ a {
 }
 /* Hamburger */
 .hamburger1 {
-  height: 45px;
-  margin: 16px;
+  height: 40px;
+  margin: 15px;
   display: -ms-grid;
   display: grid;
-  grid-template-rows: repeat(3, 10px);
+  grid-template-rows: repeat(2, 9px);
   justify-items: center;
-  z-index: 120;
+  z-index: 115;
 }
 .hamburger1 div {
   background-color: black;
