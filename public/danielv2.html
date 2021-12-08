@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+
+<head>
+    <link rel="stylesheet" href="daniel.css">
+    <title>Danielcocksukker=madsrøvsuger</title>
+    <script type="text/javascript" src="d3.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript"></script>
+    <script>
+        d3.json("http://localhost:3000/final").then(function (data) {
+            console.log("alt data:", data);
+            let final = data.final;
+            console.log("første række:", final[0])
+            console.log("første række:", (final[0].navn), (final[0].co2_kg), (final[0].kategori_id));
+
+
+
+            //Width and height
+            var w = 900;
+            var h = 300;
+            var padding = 20
+
+            var dataset = [];
+
+            for (i = 0; i <= 10; i++) {
+                dataset.push([final[i].co2_kg]);
+            }
+
+            console.log(dataset);
+
+            var xScale = d3.scaleBand()
+                .domain(d3.range(dataset.length))
+                .rangeRound([0, w])
+                .paddingInner(0.05);
+
+            var yScale = d3.scaleLinear()
+                .domain([0, d3.max(dataset)])
+                .range([0, h]);
+
+            var axScale = d3.scaleLinear()
+                .domain([0, d3.max(dataset)])
+                .range([h, 0]);
+
+            //Create SVG element
+            var svg = d3.select("body")
+                .append("svg")
+                .attr("width", w)
+                .attr("height", h);
+
+            var yAxis = d3.axisLeft()
+                .scale(axScale)
+                .ticks(10);
+
+            //Create bars
+            svg.selectAll("rect")
+                .data(dataset)
+                .enter()
+                .append("rect")
+                .attr("x", function (d, i) {
+                    return xScale(i);
+                })
+                .attr("y", function (d) {
+                    return h - yScale(d);
+                })
+                .attr("width", xScale.bandwidth())
+                .attr("height", function (d) {
+                    return yScale(d);
+                })
+                .attr("fill", function (d) {
+                    if (d > 5)
+                        return ("fill", "red")
+                    else return ("fill", "green")
+                })
+
+            svg.selectAll("text")
+                .data(dataset)
+                .enter()
+                .append("text")
+                .text(function (d) {
+                    return d;
+                })
+                .attr("x", function (d, i) {
+                    return i * (w / dataset.length) + 25; // +5
+                })
+                .attr("y", function (d) {
+                    return h - (d * 25) + 12;
+                })
+                .attr("fill", "white");
+
+
+
+            svg.append("g")
+                .attr("class", "axis")
+                .attr("transform", "translate(" + padding + ",0)")
+                .call(yAxis)
+        })
+
+    </script>
+
+
+
+</body>
+
+
+
+</html>

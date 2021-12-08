@@ -1,27 +1,126 @@
-.boxed {
-    border: 1px solid green ;
-  }
-body {
-    font-size: 30px;
-    
-}
-table {
-    border: 1px solid black;
+.overskrift {
+    text-shadow: 4px 4px 4px #000000;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
-    background-color: black;
-    position:relative; left:750px; top:-300px;
+    color: rgb(122, 122, 122);
+    }
+  body {
+      font-size: 30px;
+      color: black;
+      background-image: url("https://ngs-it.com/files/course/Backgrounds_in_CSS.jpg");
+      background-size: cover;
   }
-  th {
-    background-color: #04AA6D;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  td {
-    background-color:rgb(109, 105, 90);
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    height: 50px
-  }
-  svg {
-    border: 3px solid green
-  }
+
+  table {
+      border: 2px solid black;
+      text-align: center;
+      background-color:rgba(0, 0, 0, 0.5);
+      position:relative; left:750px; top:-300px;
+      border-collapse: collapse;
+      background-image: url(https://www.bypeople.com/wp-content/uploads/2014/05/pretty-grey-background-css.jpg);
+      opacity: 0.5;
+      
+    }
+    table:hover{
+      opacity: 1;
+    }
+    th {
+      background-color:rgba(0, 0, 0, 0);
+      border: 2px solid black;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    td {
+      background-color:rgba(0, 0, 0, 0);
+      border: 2px solid black;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      height: 50px;
+    }
+    svg {
+      border: 3px solid green
+    }
+    a {
+      color:inherit;
+      text-decoration: none
+    }
+
+    .container {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: #fff;
+    }
+    .lead { font-family: 'Quicksand'; }
+    .header-bar {
+      position: relative;
+      width: 67%;
+      min-width: 300px;
+      height: 50px;
+      border: 10px solid transparent;
+      border-top: 10px solid #fffa;
+      border-left: 10px solid #fffa;
+      box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.25) inset;
+    }
+    .header-bar::after {
+      content: '';
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 30%;
+      height: 49px;
+      border: 10px solid transparent;
+      border-bottom: 10px solid #fffa;
+      border-right: 10px solid #fffa;
+      transition: 0.3s linear all;
+    }
+    .header-bar > .logo {
+      position: absolute;
+      top: calc(50% - 20px);
+      left: 10px;
+      transform: translateY(-50%);
+      color: #fffc;
+      font-family: 'Parisienne', cursive;
+      cursor: default;
+      user-select: none;
+    }
+    .slider-menu {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      z-index: 1;
+    }
+    .slider-menu > li {
+      display: inline-flex;
+      padding: 14px;
+      margin-left: 2px;
+      font-family: 'Quicksand', sans-serif;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s linear all;
+      user-select: none;
+    }
+    .slider-menu > li:hover {
+      color: #faa;
+      box-shadow: 0 50px 5px rgba(0, 0, 0, 0.15) inset;
+    }
+    .aeu-signature {
+      position: fixed;
+      top: 5px;
+      left: 50%;
+      transform: translate(-50%);
+      font-size: 15px;
+      line-height: 30px;
+      background-color: #fff;
+      padding: 5px 10px;
+      border-radius: 25px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    }
+    .aeu-signature { font-family: "Quicksand"; }
+    .aeu-signature > img { height: 30px; }

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+
+<head>
+  <link rel="stylesheet" href="ahmadstyle.css">
+  <title>Danielcocksukker=madsrøvsuger</title>
+  <script type="text/javascript" src="d3.js"></script>
+  <style>
+
+  </style>
+</head>
+<div class="boxed">
+  <h1>Daniel og Mads stinker af gylle gennem munden a/s</h1>
+</div>
+
+<body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+  <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+  
+
+
+  <script type="text/javascript"></script>
+  <script>
+    d3.json("http://localhost:3000/final").then(function (data) {
+      console.log("alt data:", data);
+      let final = data.final;
+      console.log("første række:", final[0])
+      console.log("første række:", (final[0].navn), (final[0].co2_kg), (final[0].kategori_id));
+
+      var chartColors = {
+        red: 'rgb(255, 0, 0)',
+        blue: 'rgb(0, 180, 0)'
+      };
+      Chart.defaults.global.defaultFontColor = "white";
+      var ctx = document.getElementById("myChart").getContext("2d");
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ["Pasta kødsovs", "Cæsarsalat", "Kylling og kartofler", "Lasagne", "Din ret"],
+          datasets: [{
+            label: 'Total mængde Co2 udledt',
+            backgroundColor: [
+              chartColors.blue,
+              chartColors.blue,
+              chartColors.blue,
+              chartColors.blue,
+              chartColors.blue
+            ],
+            data: [17.6192, 2.6922, 2.58, 21.1552, final[10].co2_kg]
+          }],
+        }
+      });
+
+      var colorChangeValue = 15; //set this to whatever is the deciding color change value
+      var dataset = myChart.data.datasets[0];
+      for (var i = 0; i < dataset.data.length; i++) {
+        if (dataset.data[i] > colorChangeValue) {
+          dataset.backgroundColor[i] = chartColors.red;
+        }
+      }
+
+
+      
+
+      
+      myChart.update();
+
+
+
+
+
+      var tds = document.getElementById('Co2').getElementsByTagName('td');
+      var sum = 0;
+      for (var i = 0; i < tds.length; i++) {
+        if (tds[i].className == 'count-me') {
+          sum += isNaN(tds[i].innerHTML) ? 0 : parseInt(tds[i].innerHTML);
+        }
+      }
+      document.getElementById('Co2').innerHTML += '<tr><td>Co2 udledt i alt</td><td colspan="2">' + sum + " kg" + '</td></tr>';
+    })
+  </script>
+<p>Alle mad eksempler er med udgangspunkt i en normal dansk familie på 4 personer.<p>
+
+  <table id="Co2">
+    <tr>
+      <th>Ingrediens</td>
+      <th>Mængde</td>
+      <th>Co2 udledt i kg</td>
+    </tr>
+    <tr>
+      <td>Oksekød</td>
+      <td>1000g</td>
+      <td class="count-me">48</td>
+    </tr>
+    <tr>
+      <td id=1>Smør</td>
+      <td>336g</td>
+      <td class="count-me">420</td>
+    </tr>
+    <tr>
+      <td>Pasta</td>
+      <td>1g</td>
+      <td class="count-me">1337</td>
+    </tr>
+    <tr>
+      <td>Kylling</td>
+      <td>750g</td>
+      <td class="count-me">69</td>
+    </tr>
+    <tr>
+      <td>Ost 45%</td>
+      <td>1789g</td>
+      <td class="count-me">75</td>
+    </tr>
+    <tr>
+      <td>Pizza</td>
+      <td>900g</td>
+      <td class="count-me">61</td>
+    </tr>
+  </table>
+
+
+  <p> Du har udledt 2010kg Co2, det svarer til at køre x km i en VW up.</p>
+
+</body>
+
+
+
+</html>
