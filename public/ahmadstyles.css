@@ -105,6 +105,7 @@
     font-size: 125%;
     display: inline-block;
     line-height: 32px;
+    text-align: center;
   }
   .p2 {
     color: rgb(211, 207, 207);
@@ -142,10 +143,10 @@
   }
   img {
     width: 400px;
-    max-width: 100%;
+    max-width: 1000%;
     padding-right: 2%;
     margin: 10px;
-    float: right;
+    
   }
   a {
     color: white;
