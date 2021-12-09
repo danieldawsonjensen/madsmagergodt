@@ -3,20 +3,77 @@
 <meta charset="UTF-8">
 
 <head>
-  <link rel="stylesheet" href="ahmadstyle.css">
+  <link rel="stylesheet" href="dillerstyles.css">
   <title>Danielcocksukker=madsrøvsuger</title>
   <script type="text/javascript" src="d3.js"></script>
   <style>
 
   </style>
 </head>
-<section
 <div class="boxed">
-  <h1>Daniel og Mads stinker af gylle gennem munden a/s</h1>
+</div>
+<h1>Gruppe 5s visualisering</h1>
+<a href="#sec-2">
+  <div class="scroll-down"></div>
+</a>
+<g>       
+  <div class="p2">
+    <g>
+        <p> Kan du gætte hvilken af disse retter der udleder mest CO2?</p>
+        <ul class="a">
+        <li>Pasta Kødsovs</li>
+        <li>Lasagne</li>
+        <li>Pastasalat</li>
+        </ul>
+        <button onclick="myFunction1()">Se svaret!</button>
+        <p id="svar1"></p>
+        <script>
+          function myFunction1() {
+            document.getElementById("svar1").innerHTML = "Pasta kødsovs udleder mest CO2";
+          }
+        </script>
+    </g>
 </div>
 
-<body>
+<g>       
+    <div class="p3">
+      <g>
+          <p> Kan du gætte hvilken af disse retter der udleder mindst CO2?</p>
+          <ul class="a">
+            <li>Cæsarsalat</li>
+            <li>Kylling og kartofler</li>
+            <li>Burgere</li>
+          </ul>
+          <button onclick="myFunction2()">Se svaret!</button>
+          <p id="svar2"></p>
+          <script>
+            function myFunction2() {
+              document.getElementById("svar2").innerHTML = "Cæsarsalat udleder mindst CO2";
+            }
+          </script>
+      </g>
+  </div>
+  <g>       
+    <div class="p4">
+      <g>
+          <p> Kan du gætte hvilken ret som udleder for meget CO2 ifølge MyEmissions?</p>
+          <ul class="a">
+            <li>Pita og pommes frites</li>
+            <li>Kyllingevinger</li>
+            <li>Pastasalat</li>
+          </ul>
+          <button onclick="myFunction3()">Se svaret!</button>
+          <p id="svar3"></p>
+          <script>
+            function myFunction3() {
+              document.getElementById("svar3").innerHTML = "Pita og pommes frites udleder for meget CO2 ifølge MyEmissions";
+            }
+          </script>
+      </g>
+  </div>
 
+<body>
+<section id= "sec-2">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
   <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
@@ -25,6 +82,7 @@
 
   <script type="text/javascript"></script>
   <script>
+  
     d3.json("http://localhost:3000/final").then(function (data) {
       console.log("alt data:", data);
       let final = data.final;
@@ -83,8 +141,14 @@
       document.getElementById('Co2').innerHTML += '<tr><td>Co2 udledt i alt</td><td colspan="2">' + sum + " kg" + '</td></tr>';
     })
   </script>
-<p>Alle mad eksempler er med udgangspunkt i en normal dansk familie på 4 personer.<p>
+</section>
+<a href="#sec-3">
+  <div class="scroll-down"></div>
+</a>
+<br>
+ <p>Alle mad eksempler er med udgangspunkt i en normal dansk familie på 4 personer.<p>
 
+<section id= "sec-3">
   <table id="Co2">
     <tr>
       <th>Ingrediens</td>
@@ -122,10 +186,13 @@
       <td class="count-me">61</td>
     </tr>
   </table>
-
-
+</section>
+<a href="#sec-4">
+  <div class="scroll-down"></div>
+</a>
+<section id= "sec-4">
   <p> Du har udledt 2010kg Co2, det svarer til at køre x km i en VW up.</p>
-
+</section>
 </body>
 
 

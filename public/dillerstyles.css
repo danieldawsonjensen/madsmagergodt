@@ -1,0 +1,261 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  html{
+    scroll-behavior: smooth;
+  }
+  section{
+    min-height: 95vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.scroll-down{
+    height: 50px;
+    width: 30px;
+    border: 2px solid white;
+    position: relative center;
+    left: 50%;
+    bottom: 100px;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+.scroll-down::after{
+  content:'';
+  position: relative;
+  top: 20%;
+  left: 50%;
+  border: 2px solid white;
+  height: 10px;
+  width: 10px;
+  transform: translate(-50%,-50%) rotate(45deg);
+  border-top: transparent;
+  border-left: transparent; 
+}
+
+.scroll-down::after{
+  top: 30%;
+
+}
+
+    body {
+      text-align: center;
+    }
+    
+    .show {display: block;}
+    
+    body {
+      background-color: white;
+      background-image: url("http://skiveprayertimes.dk/dark-blue-texture.jpg");
+      background-size: cover;
+    }
+    
+    
+    table {
+      border: 1px solid rgb(255, 255, 255);
+      text-align: center;
+      background-color: rgb(255, 255, 255);
+      position: center;
+    }
+    th {
+      background-color: rgb(166, 247, 218);
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    td {
+      background-color:rgb(96, 180, 0);
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      height: 50px
+    }
+    g {
+      width: 100%;
+      padding-left: 3%;
+    }
+    h1 {
+      position: relative;
+      color: rgb(166, 247, 218);
+      text-align: center;
+      font-size: 500%;
+    }
+    h2 {
+      color: rgb(166, 247, 218);
+      font-size: 300%;
+      width: 95%;
+      text-align: left;
+    }
+    h3 {
+      color: rgb(166, 247, 218); 
+      font-size: 150%;
+      width: 95%;
+      text-align: left;
+    }
+    h4 {
+      color: rgb(166, 247, 218);
+      width: 95%;
+      text-align: left;
+    }
+    p {
+      color: rgb(211, 207, 207);
+      margin-left: auto;
+      margin-right: auto;
+      padding-bottom: 1%;
+      width: 75%;
+      font-size: 125%;
+      display: inline-block;
+      line-height: 32px;
+      position: center;
+    }
+    ul {
+      color: rgb(211, 207, 207);
+      margin-left: auto;
+      margin-right: auto;
+      padding-bottom: 1%;
+      width: 75%;
+      font-size: 125%;
+      display: inline-block;
+      line-height: 32px;
+    }
+    div {
+      background-color: rgba(255, 255, 255, 0.05);
+      background-repeat: no-repeat;
+      border-radius: 2px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 75%;
+      max-width: 100%;
+      display: flex;
+      align-items: center;
+    }
+    .content2 {
+      margin-left: 13%;
+    }
+    img {
+      width: 400px;
+      max-width: 100%;
+      padding-right: 2%;
+      margin: 10px;
+      float: right;
+    }
+    a {
+      color: white;
+      text-decoration: none; 
+      }
+    .p-menu1{
+      position: relative;
+      height: 100%;
+      width: 150px;
+      margin-top: 20px;
+    }
+    #navbar {
+      position: absolute;
+      align-content: center;
+      margin-top: 3px;
+      margin-left: 12px;
+    }
+    /* Hamburger */
+    .hamburger1 {
+      height: 30px;
+      margin: 15px;
+      display: -ms-grid;
+      display: grid;
+      grid-template-rows: repeat(3, 9px);
+      justify-items: center;
+      z-index: 120;
+    }
+    .hamburger1 div {
+      background-color: rgb(255, 255, 255);
+      position: relative;
+      width: 35px;
+      height: 4px;
+      margin-top: 10px;
+      -webkit-transition: all 0.1s ease-in-out;
+      transition: all 0.1s ease-in-out;
+      color: rgb(255, 255, 255);
+    }
+    #toggle1 {
+      display: none;
+    }
+    #toggle1:checked + .hamburger1 .top {
+      -webkit-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      margin-top: 18px;
+    }
+    #toggle1:checked + .hamburger1 .meat {
+      -webkit-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+    #toggle1:checked + .hamburger1 .bottom {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    }
+    #toggle1:checked ~ .menu1 {
+      height: 240px;
+    }
+    /* Menu */
+    .menu1 {
+    width: 100%;
+    margin: 0;
+    display: -ms-grid;
+    display: grid;
+    padding: 0;
+    list-style: none;
+    clear: both;
+    width: auto;
+    text-align: center;
+    height: 0px;
+    overflow: hidden;
+    transition: height .4s ease;
+    z-index: 120;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    }
+    .menu1 a:first-child {
+    margin-top: 40px;
+    }
+    .menu1 a:last-child {
+    margin-bottom: 40px;
+    }
+    .link1 {
+      margin: 0;
+      padding: 10px 10px;
+      color: rgb(255, 255, 255);
+      border: solid 1px;
+      border-left: none;
+      border-right: none;
+    }
+    .link1:hover {
+      color: white;
+      -webkit-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+      background-color: #116611;
+    }
+    p.intro {
+      margin-left: 13%;
+    }
+   
+    a:link {
+      color:teal;
+      background-color: transparent;
+      text-decoration: none;
+    }
+    
+    a {
+      color: teal;
+    }
+  
+    a:hover {
+      color:blue;
+      background-color: transparent;
+      text-decoration: underline;
+    }
+    
+    a:active {
+      color: pink;
+      background-color: transparent;
+      text-decoration: underline;
+    }
