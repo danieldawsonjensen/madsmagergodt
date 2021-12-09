@@ -28,6 +28,9 @@
     display: block;
   }
   
+  body {
+    text-align: center;
+  }
   
   .show {display: block;}
   
@@ -220,3 +223,24 @@
     margin-left: 13%;
   }
  
+  a:link {
+    color:teal;
+    background-color: transparent;
+    text-decoration: none;
+  }
+  
+  a {
+    color: teal;
+  }
+
+  a:hover {
+    color:blue;
+    background-color: transparent;
+    text-decoration: underline;
+  }
+  
+  a:active {
+    color: pink;
+    background-color: transparent;
+    text-decoration: underline;
+  }
