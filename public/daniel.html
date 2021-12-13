@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+
+<head>
+    <link rel="stylesheet" href="daniel.css">
+    <title>danielv2</title>
+    <script type="text/javascript" src="d3.js"></script>
+</head>
+
+<body>
+    <script>
+        d3.json("http://localhost:3000/final").then(function (data) {
+            console.log("alt data:", data);
+            let final = data.final;
+            console.log("første række:", final[0])
+            console.log("første række:", (final[0].navn), (final[0].co2_kg), (final[0].kategori_id));
+
+
+
+            //Width and height
+            var w = 900;
+            var h = 500;
+            var offset = 30;
+
+            var dataset = [
+                ["Pasta m/kødsovs", 23],
+                ["Vegetarret", final[34].co2_kg * 0.5 + final[38].co2_kg * 0.45 + final[1].co2_kg * 0.3 + final[0].co2_kg * 0.175 + final[21].co2_kg * 0.15 + final[22].co2_kg * 0.01 + final[37].co2_kg * 0.14 + final[20].co2_kg * 0.007 + final[39].co2_kg * 0.005 + final[53].co2_kg * 0.031],
+                ["Kylling m/kart.", 2.6],
+                ["Lasagne", 21.2],
+                ["Burger", 20.3],
+                ["12 x Rugbrød", 15],
+                ["Steak m/kartofler", 155.7],
+                ["4 x Pizza", 6 * final[0].co2_kg],
+                ["Chokoladekage", 2.2],
+                ["Frugtsalat", 2.2],
+            ];
+
+            console.log(dataset);
+
+            var xScale = d3.scaleBand()
+                .domain(d3.range(dataset.length))
+                .rangeRound([0, w])
+                .paddingInner(0.05);
+
+            var yScale = d3.scaleLinear()
+                .domain([0, d3.max(dataset, function (d) { return d[1]; })])
+                .range([0, h])
+
+            var axScale = d3.scaleLinear()
+                .domain([0, d3.max(dataset, function (d) { return d[1]; })])
+                .range([h, 0]);
+
+            //Create SVG element
+            var svg = d3.select("body")
+                .append("svg")
+                .attr("width", w + 20)
+                .attr("height", h + 20);
+
+            var yAxis = d3.axisLeft()
+                .scale(axScale)
+                .ticks(10);
+
+            //Create bars
+            svg.selectAll("rect")
+                .data(dataset)
+                .enter()
+                .append("rect")
+                .attr("x", function (d, i) {
+                    return (xScale(i) + offset);
+                })
+                .attr("y", function (d) {
+                    return h - yScale(d[1]);
+                })
+                .attr("width", xScale.bandwidth())
+                .attr("height", function (d) {
+                    return yScale(d[1]);
+                })
+                .attr("fill", function (d) {
+                    if (d[1] > 5)
+                        return ("fill", "darkred")
+                    else return ("fill", "darkgreen")
+                })
+                .on("mouseover", function (d) {
+
+                    //Get this bar's x/y values, then augment for the tooltip
+                    var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.bandwidth() / 2;
+                    var yPosition = parseFloat(d3.select(this).attr("y")) / 2 + h / 2;
+
+                    //Update the tooltip position and value
+                    d3.select("#tooltip")
+                        .style("left", xPosition + "px")
+                        .style("top", yPosition + "px")
+                        .select("#value")
+                        .text(d[1]);
+
+                    //Show the tooltip
+                    d3.select("#tooltip").classed("hidden", false);
+
+                })
+                .on("mouseout", function () {
+
+                    //Hide the tooltip
+                    d3.select("#tooltip").classed("hidden", true);
+
+                })
+                .on("click", function () {
+                    sortBars();
+                });
+
+            //Define sort order flag
+            var sortOrder = false;
+
+            //Define sort function
+            var sortBars = function () {
+
+                //Flip value of sortOrder
+                sortOrder = !sortOrder;
+
+                svg.selectAll("rect")
+                    .sort(function (a, b) {
+                        if (sortOrder) {
+                            return d3.ascending(a[1], b[1]);
+                        } else {
+                            return d3.descending(a[1], b[1]);
+                        }
+                    })
+                    .transition()
+                    .delay(function (d, i) {
+                        return i * 50;
+                    })
+                    .duration(1000)
+                    .attr("x", function (d, i) {
+                        return xScale(i) + offset;
+                    });
+
+                svg.selectAll("text")
+                    .sort(function (a, b) {
+                        if (sortOrder) {
+                            return d3.ascending(a[1], b[1]);
+                        } else {
+                            return d3.descending(a[1], b[1]);
+                        }
+                    })
+                    .transition()
+                    .delay(function (d, i) {
+                        return i * 50;
+                    })
+                    .duration(1000)
+                    .attr("x", function (d, i) {
+                        return xScale(i) + offset;
+                    });
+
+            };
+
+
+            svg.selectAll("text")
+                .attr("class", "label")
+                .data(dataset)
+                .enter()
+                .append("text")
+                .text(function (d) {
+                    return d[0];
+                })
+                .attr("x", function (d, i) {
+                    return (xScale(i) + offset);
+                })
+                .attr("y", function (d) {
+                    return h + 20;
+                })
+                .attr("fill", "white")
+                .attr("font-size", "11px")
+                .attr("font-weight", "bold")
+
+
+
+            svg.append("g")
+                .attr("class", "axis")
+                .attr("transform", "translate(" + offset + ",0)")
+                .call(yAxis)
+                .attr("stroke", "white")
+
+
+                var tds = document.getElementById('pasta/kødsovs').getElementsByTagName('td');
+            var sum = 0;
+            for (var i = 0; i < tds.length; i++) {
+                if (tds[i].className == 'count-me') {
+                    sum += isNaN(tds[i].innerHTML) ? 0 : parseFloat(tds[i].innerHTML);
+                }
+            }
+            document.getElementById('pasta/kødsovs').innerHTML += '<tr><td>Co2 udledt i alt</td><td colspan="2">' + sum + " kg" + '</td></tr>';
+        
+        })
+
+        function show() {
+            var selectedTable = document.getElementById("drp").value;
+
+            var elements = document.getElementsByClassName('tableClass')
+
+            for (var i = 0; i < elements.length; i++) {
+                if (elements[i].id == selectedTable)
+                    elements[i].style.display = '';
+                else
+                    elements[i].style.display = 'none';
+            }
+
+        }
+    </script>
+
+    <select onchange="show(value)" id="drp">
+        <option value='pasta/kødsovs'>Pasta m/kødsovs</option>
+        <option value='vegetarret'>Vegetarret</option>
+        <option value='kylling/kartofler'>Hel kylling m/kartofler</option>
+        <option value='lasagne'>Lasagne</option>
+        <option value='burger'>Burger</option>
+        <option value='rugbrød'>12 rugbrødsmadder</option>
+        <option value='steak'>Steak m/kartofler</option>
+        <option value='pizza'>6 x pizza</option>
+        <option value='chokoladekage'>Chokoladekage</option>
+        <option value='frugtsalat'>Frugtsalat</option>
+    </select>
+
+    </br></br>
+
+    <table border='1' id="pasta/kødsovs" class="tableClass">
+        <tr>
+            <th>Ingrediens</td>
+            <th>Mængde</td>
+            <th>Co2 udledt i kg</td>
+        </tr>
+        <tr>
+            <td>Pasta</td>
+            <td>500g</td>
+            <td class="count-me">0.865</td>
+        </tr>
+        <tr>
+            <td>Oksekød</td>
+            <td>500g</td>
+            <td class="count-me">17.095</td>
+        </tr>
+        <tr>
+            <td>Løg</td>
+            <td>200g</td>
+            <td class="count-me">0.18</td>
+        </tr>
+        <tr>
+            <td>2 fede hvidløg</td>
+            <td>12g</td>
+            <td class="count-me">0.016</td>
+        </tr>
+        <tr>
+            <td>Flåede tomater</td>
+            <td>1 dåse(500g)</td>
+            <td class="count-me">0.63</td>
+        </tr>
+        <tr>
+            <td>1 tsk salt</td>
+            <td>6g</td>
+            <td class="count-me">0.003</td>
+        </tr>
+        <tr>
+            <td>Peber</td>
+            <td>5g</td>
+            <td class="count-me">0.021</td>
+        </tr>
+    </table>
+
+
+    <table border='1' id="vegetarret" class="tableClass" style="display:none;">
+        <thead>
+            <tr>
+                <th>Ingrediens</th>
+                <th>Mængde</th>
+                <th>CO2 udledt i kg</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+
+            </tr>
+        </tbody>
+    </table>
+
+    <table border='1' id="table3" class="tableClass" style="display:none;">
+        <tr>
+            <th>Ingrediens</td>
+            <th>Mængde</td>
+            <th>Co2 udledt i kg</td>
+        </tr>
+        <tr>
+            <td>Oksekød</td>
+            <td>1000g</td>
+            <td class="count-me">148</td>
+        </tr>
+        <tr>
+            <td id=1>Smør</td>
+            <td>336g</td>
+            <td class="count-me">420</td>
+        </tr>
+        <tr>
+            <td>Pasta</td>
+            <td>1g</td>
+            <td class="count-me">1337</td>
+        </tr>
+        <tr>
+            <td>Kylling</td>
+            <td>750g</td>
+            <td class="count-me">69</td>
+        </tr>
+        <tr>
+            <td>Ost 45%</td>
+            <td>1789g</td>
+            <td class="count-me">75</td>
+        </tr>
+        <tr>
+            <td>Pizza</td>
+            <td>900g</td>
+            <td class="count-me">61</td>
+        </tr>
+    </table>
+</body>
+
+</html>
