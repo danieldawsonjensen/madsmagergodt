@@ -11,34 +11,7 @@
   <link rel="icon" type="image/png" href="./../../billeder/icon.png">
   <script type="text/javascript" src="d3.js"></script>
   <style>
-    rect:hover {
-      fill: orange;
-    }
 
-    #tooltip {
-      position: absolute;
-      width: 200px;
-      height: auto;
-      padding: 10px;
-      -webkit-border-radius: 10px;
-      -moz-border-radius: 10px;
-      border-radius: 10px;
-      -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-      -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-      pointer-events: none;
-    }
-
-    #tooltip.hidden {
-      display: none;
-    }
-
-    #tooltip p {
-      margin: 0;
-      font-family: sans-serif;
-      font-size: 16px;
-      line-height: 20px;
-    }
   </style>
 
 </head>
@@ -147,7 +120,7 @@
         <script>
           var final = []
           var dataset = []
-          d3.json("http://localhost:3000/final").then(function (data) {
+          d3.json("/final").then(function (data) {
             console.log("alt data:", data);
             final = data.final;
             console.log("første række:", final[0])
@@ -278,23 +251,18 @@
               ["Frugtsalat", final[41].co2_kg * 0.675 + final[43].co2_kg * 1.5 + final[45].co2_kg * 1.5 + final[44].co2_kg * 0.48]
             ];
             console.log(data);
-
-            var sum = 0;
-            for (let i = 0; i < data[1].length; i++) {
-              sum += data[1];
-            }
-            console.log(sum);
+            console.log(data[1][1]);
             var xScale = d3.scaleBand()
               .domain(d3.range(data.length))
               .rangeRound([0, w])
               .paddingInner(0.05);
 
             var yScale = d3.scaleLinear()
-              .domain([0, d3.max(data, function (d) { return d[1]; })])
+              .domain([0, d3.max((data), function (d) { return d[1] + 10; })])
               .range([0, h])
 
             var axScale = d3.scaleLinear()
-              .domain([0, d3.max(data, function (d) { return d[1]; })])
+              .domain([0, d3.max(data, function (d) { return d[1] + 10; })])
               .range([h, 0]);
 
             //Create SVG element
@@ -306,7 +274,7 @@
 
             var yAxis = d3.axisLeft()
               .scale(axScale)
-              .ticks(10);
+              .ticks(15);
 
             //Create bars
             svg.selectAll("rect")
@@ -325,9 +293,50 @@
               })
               .attr("fill", function (d) {
                 if (d[1] > 5)
-                  return ("fill", "darkred")
-                else return ("fill", "darkgreen")
+                  return ("fill", "rgb(139,0,0)")
+                else return ("fill", "rgb(0,120,0)")
               })
+              .on("mouseover", function (d, i) {
+
+                //Get this bar's x/y values, then augment for the tooltip
+                var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.bandwidth() / 2;
+                var yPosition = parseFloat(d3.select(this).attr("y")) + 14;
+
+                d3.select(this).attr("fill", function (d) {
+                  if (d[1] > 5)
+                    return ("fill", "red")
+                  else if (d[1] < 5)
+                    return ("fill", "rgb(0,180,0)")
+                })
+
+                //Create the tooltip label
+                svg.append("text")
+                  .attr("id", "tooltip")
+                  .attr("x", xPosition)
+                  .attr("y", yPosition - 21)
+                  .attr("text-anchor", "middle")
+                  .attr("font-family", "sans-serif")
+                  .attr("font-size", "15px")
+                  .attr("font-weight", "bold")
+                  .attr("fill", "rgba(255, 255, 255, 0.74)")
+                  .text(parseFloat(i[1]).toFixed(2));
+
+              })
+
+              .on("mouseout", function () {
+
+                //Remove the tooltip
+                d3.select("#tooltip").remove();
+                d3.select(this).attr("fill", function (d) {
+                  if (d[1] > 5)
+                    return ("fill", "rgb(139,0,0)")
+                  else if (d[1] < 5)
+                    return ("fill", "rgb(0,120,0)")
+                })
+              })
+
+
+
               .on("click", function () {
                 sortBars();
               });
