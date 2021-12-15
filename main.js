@@ -12,7 +12,7 @@ const klient = new Client({
 });
 
 const qry = `select * from final
-order by kategori_id asc, co2_kg desc`
+order by mad_id`
 
 app.get('/final', async (req, res) => {
     try {
