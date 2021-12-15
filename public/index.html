@@ -41,7 +41,7 @@
     <g>
       <p> Er du miljøbevidst omkring din mad?</p>
       <p> <a href="https://myemissions.green/understanding-the-fair-daily-food-emissions-value/" target="_blank"> My
-          Emissions</a> anbefaler at man per person maks udleder 3.05 kgCO2e/dag. Dette har de udregnet baseret på en <a
+          Emissions</a> anbefaler at man per person maks udleder 3.05 kgCO2/dag. Dette har de udregnet baseret på en <a
           href="https://www.unep.org/news-and-stories/press-release/cut-global-emissions-76-percent-every-year-next-decade-meet-15degc"
           target="blank">UN-forudsigelse</a> der mener, at vi skal reducere vores årlige CO2-udledning med 7.6% hvert
         år, for at begrænse global opvarmning til 1.5°C til 2030.</p>
@@ -131,7 +131,7 @@
             var w = 900;
             var h = 500;
             var offset = 30;
-
+//metoden vi indsætter data til søjlerne data fra pgadmin
             dataset = [
               {
                 'retnavn': 'pasta/kødsovs', 'ingredienser': [
@@ -236,7 +236,7 @@
             var w = 1100;
             var h = 500;
             var offset = 30;
-
+//metoden vi udregner co2 udslip pr ret i tabellen data hentet fra pgadmin
             var data = [
               ["Pasta m/kødsovs", final[34].co2_kg * 0.5 + final[3].co2_kg * 0.5 + final[38].co2_kg * 0.2 + final[20].co2_kg * 0.007 + final[39].co2_kg * 0.005 + final[19].co2_kg * 0.012 + 0.67 + 1.7],
               ["Vegetarret", final[34].co2_kg * 0.5 + final[38].co2_kg * 0.45 + final[1].co2_kg * 0.3 + final[0].co2_kg * 0.175 + final[21].co2_kg * 0.15 + final[22].co2_kg * 0.01 + final[37].co2_kg * 0.14 + final[20].co2_kg * 0.007 + final[39].co2_kg * 0.005 + final[53].co2_kg * 0.031],
