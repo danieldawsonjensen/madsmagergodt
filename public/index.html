@@ -375,11 +375,10 @@
 
             svg.append("text")
               .attr("transform", "rotate(-90)")
-              .attr("y", 0 - 70)
-              .attr("x", 0 - (h / 2))
               .attr("dy", "1em")
-              .style("text-anchor", "middle")
-              .text("CO2 i kg");
+              .attr("x", -(h / 2))
+              .text("CO2 i kg")
+              .attr("stroke", "rgba(255, 255, 255, 0.74)");
 
           })
           // funktion til at oprette tabeller ud fra datasættet, dynamisk
