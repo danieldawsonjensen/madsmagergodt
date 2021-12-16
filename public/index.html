@@ -41,7 +41,7 @@
     <g>
       <p> Er du miljøbevidst omkring din mad?</p>
       <p> <a href="https://myemissions.green/understanding-the-fair-daily-food-emissions-value/" target="_blank"> My
-          Emissions</a> anbefaler at man per person maks udleder 3.05 kgCO2e/dag. Dette har de udregnet baseret på en <a
+          Emissions</a> anbefaler at man per person maks udleder 3.05 kgCO2/dag. Dette har de udregnet baseret på en <a
           href="https://www.unep.org/news-and-stories/press-release/cut-global-emissions-76-percent-every-year-next-decade-meet-15degc"
           target="blank">UN-forudsigelse</a> der mener, at vi skal reducere vores årlige CO2-udledning med 7.6% hvert
         år, for at begrænse global opvarmning til 1.5°C til 2030.</p>
@@ -83,7 +83,7 @@
         <g>
           <p> Kan du gætte hvilken af disse retter der udleder mindst CO2?</p>
           <ul class="a">
-            <li>Cæsarsalat</li>
+            <li>vegetarret</li>
             <li>Kylling og kartofler</li>
             <li>Burgere</li>
           </ul>
@@ -92,7 +92,7 @@
           <script>
             // funktion(2) der viser svaret
             function myFunction2() {
-              document.getElementById("svar2").innerHTML = "Kylling og kartofler udleder mindst CO2";
+              document.getElementById("svar2").innerHTML = "Vegetarret udleder mindst CO2";
             }
           </script>
         </g>
@@ -122,10 +122,10 @@
         <br>
         <p>Hold musen henover en bar for at se dets præcise CO2-udledning!</p>
         <script>
-          // starter med at definere to tomme arrays, som der derefter skal lægges data i
+          // starter med at definere to tomme arrays, som der derefter skal lægges data i.
           var final = []
           var dataset = []
-          // Kalder API-endepunktet som er blevet sat op i node main.js
+          // Kalder API-endepunktet som er blevet sat op med npm start for at lave en local server.
           d3.json("/final").then(function (data) {
             console.log("alt data:", data);
             final = data.final;
@@ -133,7 +133,9 @@
             console.log("første række:", (final[0].navn), (final[0].co2_kg), (final[0].kategori_id));
 
 
-            // definerer det primære datasæt, og inddeler dataen i array's der senere bruges til at lave tabeller under bar chart
+            // definerer det primære datasæt, og inddeler dataen i array's der senere bruges til at lave tabeller under bar chart.
+            // De data som ikke er taget fra datasættet, er taget direkte fra den ufiltreret datasæt vi har. 
+            //Grundet tidspress valgte vi ikke at lave hele vores database om for at kunne lægge vores kcal andre steder.
             dataset = [
               {
                 'retnavn': 'pasta/kødsovs', 'ingredienser': [
@@ -240,7 +242,9 @@
             var h = 500;
             var offset = 70;
 
-            // definerer datasæt der bruges til at lave bar chart
+            // definerer datasæt der bruges til at lave bar chart.
+            // De data som ikke er taget fra datasættet, er taget direkte fra den ufiltreret datasæt vi har. 
+            //Grundet tidspress valgte vi ikke at lave hele vores database om for at kunne lægge vores kcal andre steder.
             var data = [
               ["Pasta m/kødsovs", final[34].co2_kg * 0.5 + final[3].co2_kg * 0.5 + final[38].co2_kg * 0.2 + final[20].co2_kg * 0.007 + final[39].co2_kg * 0.005 + final[19].co2_kg * 0.012 + 0.67 + 1.7],
               ["Vegetarret", final[34].co2_kg * 0.5 + final[38].co2_kg * 0.45 + final[1].co2_kg * 0.3 + final[0].co2_kg * 0.175 + final[21].co2_kg * 0.15 + final[22].co2_kg * 0.01 + final[37].co2_kg * 0.14 + final[20].co2_kg * 0.007 + final[39].co2_kg * 0.005 + final[53].co2_kg * 0.031],
