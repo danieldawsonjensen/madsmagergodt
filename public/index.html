@@ -278,7 +278,7 @@
             var svg = d3.select("chart")
               .append("svg")
               .attr("width", w + 20)
-              .attr("height", h + offset + 40)
+              .attr("height", h + offset)
 
 
             var yAxis = d3.axisLeft()
@@ -298,7 +298,7 @@
               })
               .attr("width", xScale.bandwidth())
               .attr("height", function (d) {
-                return yScale(d[1]);
+                return yScale(d[1] - 50);
               })
               .attr("fill", function (d) {
                 if (d[1] > 5)
