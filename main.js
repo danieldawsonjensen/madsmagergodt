@@ -42,6 +42,6 @@ klient.connect();
 
 app.use(express.static("public"))
 
-app.listen(port, () => {
-    console.log(`Appl. lytter på http://localhost:${port}`)
+app.listen(PORT, () => {
+    console.log(`Appl. lytter på http://localhost:${PORT}`)
 })
