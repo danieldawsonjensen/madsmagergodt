@@ -238,6 +238,7 @@
             var h = 500;
             var offset = 30;
 
+            // definerer datasæt der bruges til at lave bar chart
             var data = [
               ["Pasta m/kødsovs", final[34].co2_kg * 0.5 + final[3].co2_kg * 0.5 + final[38].co2_kg * 0.2 + final[20].co2_kg * 0.007 + final[39].co2_kg * 0.005 + final[19].co2_kg * 0.012 + 0.67 + 1.7],
               ["Vegetarret", final[34].co2_kg * 0.5 + final[38].co2_kg * 0.45 + final[1].co2_kg * 0.3 + final[0].co2_kg * 0.175 + final[21].co2_kg * 0.15 + final[22].co2_kg * 0.01 + final[37].co2_kg * 0.14 + final[20].co2_kg * 0.007 + final[39].co2_kg * 0.005 + final[53].co2_kg * 0.031],
@@ -252,6 +253,8 @@
             ];
             console.log(data);
             console.log(data[1][1]);
+
+            // definerer 3 scales der bruges til henholdsvis bar chart og y-akse
             var xScale = d3.scaleBand()
               .domain(d3.range(data.length))
               .rangeRound([0, w])
@@ -265,7 +268,7 @@
               .domain([0, d3.max(data, function (d) { return d[1] + 10; })])
               .range([h, 0]);
 
-            //Create SVG element
+            // laver SVG element
             var svg = d3.select("chart")
               .append("svg")
               .attr("width", w + 20)
@@ -276,7 +279,7 @@
               .scale(axScale)
               .ticks(15);
 
-            //Create bars
+            //laver bars
             svg.selectAll("rect")
               .data(data)
               .enter()
@@ -296,12 +299,15 @@
                   return ("fill", "rgb(139,0,0)")
                 else return ("fill", "rgb(0,120,0)")
               })
+              // laver mouseover funktion til at highlighte hvilken specifik bar brugeren holder henover for at se information om baren
               .on("mouseover", function (d, i) {
+
 
                 //Get this bar's x/y values, then augment for the tooltip
                 var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.bandwidth() / 2;
                 var yPosition = parseFloat(d3.select(this).attr("y")) + 14;
 
+                // farver den specifikke bar som hoveres henover
                 d3.select(this).attr("fill", function (d) {
                   if (d[1] > 5)
                     return ("fill", "red")
@@ -309,7 +315,8 @@
                     return ("fill", "rgb(0,180,0)")
                 })
 
-                //Create the tooltip label
+
+                //opretter label der skal vises når der hoveres, 'text' sættes til i[1], fixes til 2 så 
                 svg.append("text")
                   .attr("id", "tooltip")
                   .attr("x", xPosition)
@@ -325,7 +332,7 @@
 
               .on("mouseout", function () {
 
-                //Remove the tooltip
+                //fjerner label når musen fjernes fra baren
                 d3.select("#tooltip").remove();
                 d3.select(this).attr("fill", function (d) {
                   if (d[1] > 5)
