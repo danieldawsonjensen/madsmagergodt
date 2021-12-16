@@ -368,15 +368,16 @@
               .attr("transform", "translate(" + offset + ",0)")
               .call(yAxis)
               .attr("stroke", "rgba(255, 255, 255, 0.74)")
-          })
-          svg.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 0 - margin.left)
-            .attr("x", 0 - (height / 2))
-            .attr("dy", "1em")
-            .style("text-anchor", "middle")
-            .text("Value");
 
+            svg.append("text")
+              .attr("transform", "rotate(-90)")
+              .attr("y", 0 - 70)
+              .attr("x", 0 - (h / 2))
+              .attr("dy", "1em")
+              .style("text-anchor", "middle")
+              .text("CO2 i kg");
+
+          })
           // funktion til at oprette tabeller ud fra datasættet, dynamisk
           function tabulate(data, columns) {
             var table = d3.select('table').remove()
