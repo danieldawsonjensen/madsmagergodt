@@ -340,53 +340,7 @@
                   else if (d[1] < 5)
                     return ("fill", "rgb(0,120,0)")
                 })
-              })
-
-
-              //starter on click funktion to at sortere bars når man trykker på en af dem
-              .on("click", function () {
-                sortBars();
-              })
-
-
-            //Define sort order flag
-            var sortOrder = false;
-
-            //Define sort function
-            var sortBars = function () {
-
-              //Flip value of sortOrder
-              sortOrder = !sortOrder;
-
-              svg.selectAll("rect")
-                .sort(function (a, b) {
-                  if (sortOrder) {
-                    return d3.ascending(a[1], b[1]);
-                  } else {
-                    return d3.descending(a[1], b[1]);
-                  }
-                })
-                .transition()
-                .delay(function (d, i) {
-                  return i * 50;
-                })
-                .duration(700)
-                .attr("x", function (d, i) {
-                  return xScale(i) + offset;
-                })
-              svg.selectAll("text")
-                .sort(function (a, b) {
-                  if (sortOrder) {
-                    return d3.ascending(a[1], b[1]);
-                  } else {
-                    return d3.descending(a[1], b[1]);
-                  }
-                })
-                .transition()
-                .delay(function (d, i) {
-                  return xScale([i] + offset);
-                })
-            };
+              });
 
             // laver labels til madretterne
             svg.selectAll("text")
