@@ -239,7 +239,7 @@
 
             //Definerer width og height
             var w = 1100;
-            var h = 350;
+            var h = 400;
             var offset = 70;
 
             // definerer datasæt der bruges til at lave bar chart.
@@ -298,7 +298,7 @@
               })
               .attr("width", xScale.bandwidth())
               .attr("height", function (d) {
-                return yScale(d[1] - 50);
+                return yScale(d[1]);
               })
               .attr("fill", function (d) {
                 if (d[1] > 5)
