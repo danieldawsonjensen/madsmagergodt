@@ -343,11 +343,11 @@
               })
 
 
-
+              //starter on click funktion to at sortere bars når man trykker på en af dem
               .on("click", function () {
                 sortBars();
               })
-            
+
 
             //Define sort order flag
             var sortOrder = false;
@@ -374,9 +374,21 @@
                 .attr("x", function (d, i) {
                   return xScale(i) + offset;
                 })
+              svg.selectAll("text")
+                .sort(function (a, b) {
+                  if (sortOrder) {
+                    return d3.ascending(a[1], b[1]);
+                  } else {
+                    return d3.descending(a[1], b[1]);
+                  }
+                })
+                .transition()
+                .delay(function (d, i) {
+                  return xScale([i] + offset);
+                })
             };
 
-
+            // laver labels til madretterne
             svg.selectAll("text")
               .attr("class", "label")
               .data(data)
@@ -396,7 +408,7 @@
               .attr("font-weight", "bold")
               .attr("text-anchor", "middle")
 
-
+            // opretter y-aksen
             svg.append("g")
               .attr("class", "axis")
               .attr("transform", "translate(" + offset + ",0)")
@@ -404,7 +416,7 @@
               .attr("stroke", "rgba(255, 255, 255, 0.74)")
           })
 
-
+          // funktion til at oprette tabeller ud fra datasættet, dynamisk
           function tabulate(data, columns) {
             var table = d3.select('table').remove()
             var table = d3.select('body').append('table');
@@ -439,7 +451,7 @@
           }
 
 
-
+          // funktion til dropdown menu med de diverse madretter, funktionen viser forskellige tabeller baseret på den værdi du har valgt i menuen
           function show() {
             var selectedTable = document.getElementById("drp").value;
 
@@ -465,6 +477,7 @@
         </chart>
         <br>
         <br>
+
         <section id="sec-2">
           <select onchange="show(value)" id="drp" , class="custom-select">
             <option>Vælg en af retterne for at se detaljer om retten!</option>
